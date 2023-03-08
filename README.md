@@ -6,3 +6,8 @@ These are great websites for instructions on how to set up your YouTube API Key 
 - https://blog.hubspot.com/website/how-to-get-youtube-api-key
 - https://developers.google.com/youtube/registering_an_application
 - https://developers.google.com/youtube/v3/guides/auth/installed-apps
+
+# Python Quickstart and Client Library
+These are great websites for instructions on how to set up python quickstart and client library:
+- https://developers.google.com/docs/api/quickstart/python
+- https://cloud.google.com/ai-platform/prediction/docs/python-client-library
