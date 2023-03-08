@@ -2,9 +2,10 @@ import csv
 import os
 import google.auth
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 import json
 import sys
+# Optional
+from googleapiclient.errors import HttpError
 
 # YouTube Data API v3 key
 API_KEY = 'YOUR_API_KEY'
