@@ -84,6 +84,8 @@ def process_channel_videos(channel_id):
 def loop_through_uc_codes():
     with open(SOURCE_FILE, 'r') as uccodes:
         for row in uccodes:
+            # Debugs csv headline ufeff issue
+            # This will read the csv as the first row not a headline
             channel_id = row.strip().replace(u'\ufeff','')
             process_channel_videos(channel_id)
 
