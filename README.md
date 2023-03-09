@@ -21,7 +21,7 @@ These are great websites for instructions on how to set up python quickstart and
 - https://developers.google.com/docs/api/quickstart/python
 - https://cloud.google.com/ai-platform/prediction/docs/python-client-library
 
-## To obtain a JSON file with the credentials for your Google Service Account, you can follow these steps:
+## Obtain a JSON file with the credentials for your Google Service Account:
 1. Go to the Google Cloud Console (https://console.cloud.google.com/).
 2. Select the project for which you want to create a service account.
 3. In the left-hand menu, click on "IAM & admin" and then select "Service accounts."
