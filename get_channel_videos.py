@@ -2,9 +2,9 @@ import csv
 import os
 import google.auth
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 import json
 import sys
-from googleapiclient.errors import HttpError
 
 # YouTube Data API v3 key
 API_KEY = 'YOUR_API_KEY'
@@ -23,7 +23,7 @@ OUTPUT_DIRECTORY = 'YOUR_OUTPUT_DIRECTORY'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = CREDENTIALS_FILE
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
-# Make function to get video ids from uploads playlist
+# Make function to get 100 video ids from uploads playlist
 def get_channel_videos(channel_id, max_videos=100):
     
     # Get Uploads playlist ID
@@ -61,22 +61,23 @@ def get_video_stats(video_id):
     result1 = youtube.videos().list(id=video_id, part='statistics,liveStreamingDetails,contentDetails,snippet,status,topicDetails').execute()
     return result1['items'][0]
 
-
 # Processes each channel id from a list
 def process_channel_videos(channel_id):
     print(f"Processing channel {channel_id}")
-    videos = get_channel_videos(channel_id)
-    filename = f'{OUTPUT_DIRECTORY}/{channel_id}.json'
-    with open(filename, 'w') as f:
-        for video in videos:
-            video_id = video['snippet']['resourceId']['videoId']
-            vstats = get_video_stats(video_id)
-            #print('stats')
-            #print(vstats)
-            #print()
-            out_str = json.dumps(vstats)
-            #print(out_str)
-            f.write(out_str + '\n')
+    try:
+        videos = get_channel_videos(channel_id)
+        filename = f'{OUTPUT_DIRECTORY}/{channel_id}.json'
+        with open(filename, 'w') as f:
+            for video in videos:
+                video_id = video['snippet']['resourceId']['videoId']
+                try:
+                    vstats = get_video_stats(video_id)
+                    out_str = json.dumps(vstats)
+                    f.write(out_str + '\n')
+                except HttpError:
+                    print(f"BAD VIDEO {video} ON CHANNEL {channel_id}")
+    except HttpError:
+        print(f"BAD CHANNEL {channel_id}")
 
 # Loops through SOURCE_FILE to retrieve all videos from UC codes
 # and saves them to a file for each UC code
