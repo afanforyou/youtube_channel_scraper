@@ -31,6 +31,10 @@ def get_channel_videos(channel_id, max_videos=100):
     result = youtube.channels().list(id=channel_id,  
                                   part='contentDetails').execute() 
     # Retrieves the ID of the "uploads" playlist for the channel from the API response
+    if "items" not in result:
+        print("Error fetching info for chanel_id {}".format(channel_id))
+        return []
+    
     playlist_id = result['items'][0]['contentDetails']['relatedPlaylists']['uploads'] 
     
     # Initializes an empty list to hold the retrieved videos
@@ -67,6 +71,12 @@ def process_channel_videos(channel_id):
     try:
         videos = get_channel_videos(channel_id)
         filename = f'{OUTPUT_DIRECTORY}/{channel_id}.json'
+        # if something goes wrong and you restart
+        # skip over files that you already have
+        if os.path.exists(filename):
+            print("Already have data for {}, skipping!".format(channel_id))
+            return
+
         with open(filename, 'w') as f:
             for video in videos:
                 video_id = video['snippet']['resourceId']['videoId']
