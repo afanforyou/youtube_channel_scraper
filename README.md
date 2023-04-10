@@ -46,3 +46,6 @@ If you have already created a service account in the Google Cloud Console and yo
 - UC code is the unique identifier for a YouTube channel
 - It typically takes the format of https://www.youtube.com/channel/UCLOtswgQ-2WRs5WX2gt86Xw
 - With the above example, the UC code is: UCLOtswgQ-2WRs5WX2gt86Xw
+
+## JSON to CSV
+- I have also added code (json_to_csv.py) that will flatten the collected JSON files (with video metadata) and export them to a single CSV so that they are easy to work with in pandas.
